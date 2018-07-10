@@ -1,8 +1,7 @@
-﻿
-namespace Basilicum.Server.Features.Measurement
+﻿namespace Basilicum.Server.Features.Measurement
 {
 	using AutoMapper;
-	//using Basilicum.Server.Domain;
+	using Basilicum.Server.Domain;
 
 	public class MappingProfile : Profile
 	{
