@@ -1,22 +1,23 @@
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Threading.Tasks;
+using static Basilicum.Server.Test.Helpers.SliceFixture;
 
 namespace Basilicum.Server.Test
 {
 	[TestClass]
 	public class UnitTest1
 	{
-		
-
 		[TestMethod]
-			public void TestMethod1()
+		public async Task Should_Create_NewMeasurement()
+		{
+			await Send(new Features.Measurement.Create.Command()
 			{
-				using (var scope = scopeFactory.CreateScope())
-				{
-					var mediator = scope.ServiceProvider.GetService<IMediator>();
-					return mediator.Send(request);
-				}
-			}
+				Date = DateTime.Now,
+				Value = 1
+			});
+
+			var measurements = await Send(new Features.Measurement.List.Query());
+		}
 	}
 }

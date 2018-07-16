@@ -5,9 +5,10 @@
 
 	public class MappingProfile : Profile
 	{
-		protected MappingProfile()
+		public MappingProfile()
 		{
-			CreateMap<Create.Command, Measurement>();
+			CreateMap<Create.Command, Measurement>()
+					.ForMember(dest => dest.Id, opt => opt.Ignore());
 		}
 	}
 }
