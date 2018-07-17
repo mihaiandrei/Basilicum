@@ -1,5 +1,4 @@
-﻿using Basilicum.Server.Infrastructure;
-using FakeItEasy;
+﻿using FakeItEasy;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,5 +32,7 @@ namespace Basilicum.Server.Test.Helpers
 				return await mediator.Send(request);
 			}
 		}
+
+		public static void Dummy() { }
 	}
 }

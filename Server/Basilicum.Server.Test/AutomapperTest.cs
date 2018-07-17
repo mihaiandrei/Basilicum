@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Basilicum.Server.Infrastructure;
-using MediatR;
+﻿using AutoMapper;
+using Basilicum.Server.Test.Helpers;
+using FakeItEasy;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-using AutoMapper;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace Basilicum.Server.Test
 {
@@ -13,8 +14,8 @@ namespace Basilicum.Server.Test
 		[TestMethod]
 		public void AutomapperConfigurationTest()
 		{
-			var services = new ServiceCollection();
-
+			//this is dumb
+			SliceFixture.Dummy();
 			Mapper.AssertConfigurationIsValid();
 		}
     }

@@ -5,6 +5,8 @@
 	using Basilicum.Server.Infrastructure;
 	using MediatR;
 	using System;
+	using System.Threading;
+	using System.Threading.Tasks;
 
 	public class Create
 	{
@@ -14,7 +16,7 @@
 			public DateTime Date { get; set; }
 		}
 
-		public class Handler : RequestHandler<Command>
+		public class Handler : AsyncRequestHandler<Command>
 		{
 			private readonly DatabaseContext context;
 
@@ -23,11 +25,12 @@
 				this.context = context;
 			}
 
-			protected override void Handle(Command message)
+			protected override async Task Handle(Command request, CancellationToken cancellationToken)
 			{
-				var measurement = Mapper.Map<Command, Measurement>(message);
+				var measurement = Mapper.Map<Command, Measurement>(request);
 
 				context.Measurements.Add(measurement);
+				await context.SaveChangesAsync(cancellationToken);
 			}
 		}
 	}
