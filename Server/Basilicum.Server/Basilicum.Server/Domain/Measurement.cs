@@ -9,5 +9,8 @@ namespace Basilicum.Server.Domain
 		public double Value { get; set; }
 
 		public DateTime Date { get; set; }
+
+		public int ParameterId { get; set; }
+		public Parameter Parameter { get; set; }
 	}
 }

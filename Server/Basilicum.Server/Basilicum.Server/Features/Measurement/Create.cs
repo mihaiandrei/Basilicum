@@ -14,6 +14,7 @@
 		{
 			public double Value { get; set; }
 			public DateTime Date { get; set; }
+			public int ParameterId { get; set; }
 		}
 
 		public class Handler : AsyncRequestHandler<Command>
@@ -29,7 +30,7 @@
 			{
 				var measurement = Mapper.Map<Command, Measurement>(request);
 
-				context.Measurements.Add(measurement);
+				context.Measurement.Add(measurement);
 				await context.SaveChangesAsync(cancellationToken);
 			}
 		}

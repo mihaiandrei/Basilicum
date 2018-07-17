@@ -1,7 +1,6 @@
 ﻿namespace Basilicum.Server.Features.Measurement
 {
 	using AutoMapper.QueryableExtensions;
-
 	using Basilicum.Server.Infrastructure;
 	using MediatR;
 	using Microsoft.EntityFrameworkCore;
@@ -15,12 +14,14 @@
 	{
 		public class Query : IRequest<List<Model>>
 		{
+			public int ParameterId { get; set; }
 			public DateTime StartDate { get; set; }
 			public DateTime EndDate { get; set; }
 		}
 
 		public class Model
 		{
+			public int Id { get; set; }
 			public double Value { get; set; }
 			public DateTime Date { get; set; }
 		}
@@ -36,8 +37,9 @@
 
 			public async Task<List<Model>> Handle(Query request, CancellationToken cancellationToken)
 			{
-				return await context.Measurements
-									.Where(m => m.Date >= request.StartDate &&
+				return await context.Measurement
+									.Where(m => m.ParameterId == request.ParameterId &&
+												m.Date >= request.StartDate &&
 												m.Date <= request.EndDate)
 									.ProjectTo<Model>()
 									.ToListAsync();

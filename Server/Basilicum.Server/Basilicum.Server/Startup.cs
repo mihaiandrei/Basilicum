@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Basilicum.Server
 {
 	public class Startup
-    {
+	{
 		public IConfigurationRoot Configuration { get; }
 
 		public Startup(IHostingEnvironment env)
@@ -26,7 +26,7 @@ namespace Basilicum.Server
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
-        {
+		{
 			services.AddMvc()
 					.AddFeatureFolders();
 
@@ -36,15 +36,15 @@ namespace Basilicum.Server
 			services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 		}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
 
-            app.UseMvc();
-        }
-    }
+			app.UseMvc();
+		}
+	}
 }

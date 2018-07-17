@@ -11,7 +11,7 @@ using System;
 namespace Basilicum.Server.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180716134228_InitialCreate")]
+    [Migration("20180717133152_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,11 +28,35 @@ namespace Basilicum.Server.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<int>("ParameterId");
+
                     b.Property<double>("Value");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Measurements");
+                    b.HasIndex("ParameterId");
+
+                    b.ToTable("Measurement");
+                });
+
+            modelBuilder.Entity("Basilicum.Server.Domain.Parameter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Parameter");
+                });
+
+            modelBuilder.Entity("Basilicum.Server.Domain.Measurement", b =>
+                {
+                    b.HasOne("Basilicum.Server.Domain.Parameter", "Parameter")
+                        .WithMany()
+                        .HasForeignKey("ParameterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

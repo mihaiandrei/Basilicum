@@ -8,13 +8,11 @@
 	{
 		public DatabaseContext(DbContextOptions<DatabaseContext> options)
 			: base(options)
-		{ }
+		{
+		}
 
-		//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		//{
-		//	optionsBuilder.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"]);
-		//			}
+		public DbSet<Parameter> Parameter { get; set; }
 
-		public DbSet<Measurement> Measurements { get; set; }
+		public DbSet<Measurement> Measurement { get; set; }
 	}
 }

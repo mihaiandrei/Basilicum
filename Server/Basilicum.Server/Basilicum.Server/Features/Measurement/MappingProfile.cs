@@ -8,7 +8,8 @@
 		public MappingProfile()
 		{
 			CreateMap<Create.Command, Measurement>()
-					.ForMember(dest => dest.Id, opt => opt.Ignore());
+					.ForMember(dest => dest.Id, opt => opt.Ignore())
+					.ForMember(dest => dest.Parameter, opt => opt.Ignore()); ;
 		}
 	}
 }
