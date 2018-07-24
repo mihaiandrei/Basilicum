@@ -1,31 +1,31 @@
-﻿
-
-namespace Basilicum.Server.Features.Measurement
+﻿namespace Basilicum.Server.Features.Measurement
 {
 	using MediatR;
 	using Microsoft.AspNetCore.Mvc;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
 
-	public class MeasurementController : Controller
+	[Route("api/mesurement")]
+	public class MeasurementController : ControllerBase
 	{
-		private readonly IMediator _mediator;
+		private readonly IMediator mediator;
 		public MeasurementController(IMediator mediator)
 		{
-			_mediator = mediator;
+			this.mediator = mediator;
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Create(Create.Command command)
 		{
-			await _mediator.Send(command);
+			await mediator.Send(command);
 			return Ok();
 		}
 
+		[HttpGet]
+		[Route("list")]
 		public async Task<List<List.Model>> List(List.Query query)
 		{
-			var model = await _mediator.Send(query);
-
+			var model = await mediator.Send(query);
 			return model;
 		}
 	}

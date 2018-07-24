@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Basilicum.Server
 {
@@ -34,6 +38,11 @@ namespace Basilicum.Server
 
 			services.AddMediatR(typeof(Startup));
 			services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new Info { Title = "Basilicum", Version = "v1" });
+				c.CustomSchemaIds(schema => schema.FullName);
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +52,11 @@ namespace Basilicum.Server
 			{
 				app.UseDeveloperExceptionPage();
 			}
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basilicum");
+			});
 
 			app.UseMvc();
 		}

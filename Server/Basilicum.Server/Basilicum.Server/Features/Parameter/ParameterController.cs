@@ -1,11 +1,32 @@
-﻿using System;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Basilicum.Server.Features.Parameter
 {
-    public class ParameterController
-    {
-    }
+	[Route("api/parameter")]
+	public class ParameterController : ControllerBase
+	{
+		private readonly IMediator mediator;
+		public ParameterController(IMediator mediator)
+		{
+			this.mediator = mediator;
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Create(Create.Command command)
+		{
+			await mediator.Send(command);
+			return Ok();
+		}
+
+		[HttpGet]
+		[Route("list")]
+		public async Task<List<List.Model>> List(List.Query query)
+		{
+			var model = await mediator.Send(query);
+			return model;
+		}
+	}
 }
