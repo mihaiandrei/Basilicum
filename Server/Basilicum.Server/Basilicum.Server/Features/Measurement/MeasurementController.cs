@@ -15,7 +15,7 @@
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create(Create.Command command)
+		public async Task<IActionResult> Create([FromBody]Create.Command command)
 		{
 			await mediator.Send(command);
 			return Ok();
