@@ -12,8 +12,7 @@ GPIO.output(14, GPIO.HIGH)
 GPIO.output(15, GPIO.HIGH)
 GPIO.output(18, GPIO.LOW)
 
-time.sleep(10)
-
+time.sleep(120)
 
 GPIO.output(14, GPIO.LOW)
 GPIO.output(15, GPIO.LOW)
