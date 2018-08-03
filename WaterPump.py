@@ -1,8 +1,23 @@
-class WaterPump:
-    def start(self):
-        self.isStarted = True;
+import RPi.GPIO as GPIO
+import time
 
-    def stop(self):
-        self.isStarted = False;
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(14, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
 
-        
+print ("Setup pins")
+
+GPIO.output(14, GPIO.HIGH)
+GPIO.output(15, GPIO.HIGH)
+GPIO.output(18, GPIO.LOW)
+
+time.sleep(10)
+
+
+GPIO.output(14, GPIO.LOW)
+GPIO.output(15, GPIO.LOW)
+GPIO.output(18, GPIO.LOW)
+
+print("Stop sleeping")
+GPIO.cleanup()
