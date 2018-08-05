@@ -12,12 +12,12 @@ GPIO.setup(PUMP_ENABLE, GPIO.OUT)
 GPIO.setup(PUMP_FORWARD, GPIO.OUT)
 GPIO.setup(PUMP_BACKWARDS, GPIO.OUT)
 
-def startPump:
+def startPump():
     GPIO.output(14, GPIO.HIGH)
     GPIO.output(15, GPIO.HIGH)
     GPIO.output(18, GPIO.LOW)
 
-def stopPump:
+def stopPump():
     GPIO.output(14, GPIO.LOW)
     GPIO.output(15, GPIO.LOW)
     GPIO.output(18, GPIO.LOW)
