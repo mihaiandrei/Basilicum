@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basilicum.Server", "Basilic
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{ACA52A81-0996-424C-821A-786A5972D9BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basilicum.Server.Test", "..\Basilicum.Server.Test\Basilicum.Server.Test.csproj", "{CE725BBF-E193-4B3A-AC45-2DC6C1E63C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basilicum.Server.Test", "..\Basilicum.Server.Test\Basilicum.Server.Test.csproj", "{CE725BBF-E193-4B3A-AC45-2DC6C1E63C24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basilicum.Web", "..\Basilicum.Web\Basilicum.Web.csproj", "{EE6E3EDF-893D-4378-8D62-2C103FE1DC90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CE725BBF-E193-4B3A-AC45-2DC6C1E63C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE725BBF-E193-4B3A-AC45-2DC6C1E63C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE725BBF-E193-4B3A-AC45-2DC6C1E63C24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6E3EDF-893D-4378-8D62-2C103FE1DC90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6E3EDF-893D-4378-8D62-2C103FE1DC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6E3EDF-893D-4378-8D62-2C103FE1DC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6E3EDF-893D-4378-8D62-2C103FE1DC90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
