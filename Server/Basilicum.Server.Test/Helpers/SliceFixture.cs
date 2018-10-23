@@ -1,13 +1,13 @@
-﻿using FakeItEasy;
-using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using System.IO;
-using System.Threading.Tasks;
-
-namespace Basilicum.Server.Test.Helpers
+﻿namespace Basilicum.Server.Test.Helpers
 {
-	public class SliceFixture
+    using FakeItEasy;
+    using MediatR;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
+    using System.IO;
+    using System.Threading.Tasks;
+
+    public class SliceFixture
 	{
 		private static readonly IServiceScopeFactory scopeFactory;
 

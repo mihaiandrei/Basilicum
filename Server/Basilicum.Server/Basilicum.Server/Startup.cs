@@ -1,19 +1,16 @@
-﻿using AutoMapper;
-using Basilicum.Server.Infrastructure;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
-
-namespace Basilicum.Server
+﻿namespace Basilicum.Server
 {
-	public class Startup
+    using AutoMapper;
+    using Basilicum.Server.Infrastructure;
+    using MediatR;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Swashbuckle.AspNetCore.Swagger;
+
+    public class Startup
 	{
 		public IConfigurationRoot Configuration { get; }
 
@@ -36,7 +33,7 @@ namespace Basilicum.Server
 
 			services.AddAutoMapper(typeof(Startup));
 
-			services.AddMediatR(typeof(Startup));
+            services.AddMediatR(typeof(Startup));
 			services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 			services.AddSwaggerGen(c =>
 			{
@@ -46,7 +43,7 @@ namespace Basilicum.Server
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IMapper mapper)
 		{
 			if (env.IsDevelopment())
 			{
@@ -59,6 +56,7 @@ namespace Basilicum.Server
 			});
 
 			app.UseMvc();
-		}
+            mapper.ConfigurationProvider.AssertConfigurationIsValid();
+        }
 	}
 }
