@@ -1,15 +1,29 @@
 import * as React from 'react';
 import Parameter from './Parameter';
+import IParameterModel from './ParameterModel';
 
-class ParameterRepeter extends React.Component{
+interface IProps {
+    parameters: IParameterModel[];
+}
+
+interface IState {
+    parameters: IParameterModel[];
+}
+
+class ParameterRepeter extends React.Component<IProps, IState>{
+
     public render() {
+        const listItems = this.props.parameters.map((item: IParameterModel) => {
+            return (<Parameter parameter={item} key={item.name}/>
+            );
+        });
+
         return (
-          <div>
-              <Parameter Name="Humidity"/>
-              <Parameter Name="Temperature"/>
-          </div>
+            <div>
+                {listItems}
+            </div>
         );
-      }
+    }
 }
 
 export default ParameterRepeter;

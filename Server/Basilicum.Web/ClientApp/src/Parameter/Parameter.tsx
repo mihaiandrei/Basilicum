@@ -1,14 +1,15 @@
 import * as React from 'react';
+import IParameterModel  from './ParameterModel';
 
 interface IProps{
-    Name: string;
+    parameter: IParameterModel;
 }
 
 class Parameter extends React.Component<IProps>{
     public render() {
         return (
           <div>
-            <p>{this.props.Name}</p>
+            <p>{this.props.parameter.name}</p>
           </div>
         );
       }
