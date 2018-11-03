@@ -59,6 +59,7 @@ namespace Basilicum.Web
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+            app.UseCors(conf => conf.WithOrigins("http://localhost:1200"));
         }
     }
 }
