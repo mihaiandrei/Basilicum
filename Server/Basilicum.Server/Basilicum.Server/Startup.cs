@@ -54,8 +54,12 @@
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basilicum");
 			});
+            app.UseCors(conf => conf.AllowAnyOrigin()
+                                   .AllowAnyMethod()
+                                   .AllowAnyHeader()
+                                   .AllowCredentials());
+            app.UseMvc();
 
-			app.UseMvc();
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
         }
 	}

@@ -3,7 +3,6 @@ import * as React from 'react';
 import IParameterModel from './ParameterModel';
 import ParameterRepeter from './ParameterRepeter';
 
-
 interface IProps {
     parameter: string;
 }
@@ -14,23 +13,18 @@ interface IState {
 }
 
 class ParameterSearch extends React.Component<IProps, IState>{
-    public items: IParameterModel[] = [
-        { name: 'Matthew' },
-        { name: 'Mark' },
-        { name: 'Luke' },
-        { name: 'John' }
-    ];
-
+   
     constructor(props: IProps) {
         super(props);
         this.state = { searchText: "", parameters: [] };
     }
     public handleTextChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const actualSearchText = e.currentTarget.value;
         axios.get(`http://localhost:1200/api/parameter/list`)
       .then(res => {
         this.setState({
-            parameters: this.items.filter(param => param.name.toLocaleLowerCase().indexOf(e.currentTarget.value.toLocaleLowerCase()) >= 0),
-            searchText: e.currentTarget.value
+            parameters: res.data,
+            searchText: actualSearchText
         });
       })
 
