@@ -20,7 +20,7 @@ class ParameterSearch extends React.Component<IProps, IState>{
     }
     public handleTextChange = (e: React.FormEvent<HTMLInputElement>) => {
         const actualSearchText = e.currentTarget.value;
-        axios.get(`http://localhost:1200/api/parameter/list`)
+        axios.get(`http://localhost:1200/api/parameter/list?SearchString=${actualSearchText}`)
       .then(res => {
         this.setState({
             parameters: res.data,

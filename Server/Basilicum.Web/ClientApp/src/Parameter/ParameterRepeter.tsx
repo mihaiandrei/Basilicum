@@ -11,10 +11,9 @@ interface IState {
 }
 
 class ParameterRepeter extends React.Component<IProps, IState>{
-
     public render() {
         const listItems = this.props.parameters.map((item: IParameterModel) => {
-            return (<Parameter parameter={item} key={item.name}/>
+            return (<Parameter parameter={item} key={item.id}/>
             );
         });
 

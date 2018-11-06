@@ -4,6 +4,7 @@ using Basilicum.Server.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +12,10 @@ namespace Basilicum.Server.Features.Parameter
 {
     public class List
     {
-        public class Query : IRequest<List<Model>> { }
+        public class Query : IRequest<List<Model>>
+        {
+            public string SearchString { get; set; }
+        }
 
         public class Model
         {
@@ -34,6 +38,7 @@ namespace Basilicum.Server.Features.Parameter
             public async Task<List<Model>> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await context.Parameter
+                                    .Where(p=>p.Name.Contains(request.SearchString))
                                     .ProjectTo<Model>(configurationProvider)
                                     .ToListAsync();
             }
