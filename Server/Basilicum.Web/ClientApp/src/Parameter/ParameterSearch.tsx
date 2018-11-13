@@ -13,21 +13,21 @@ interface IState {
 }
 
 class ParameterSearch extends React.Component<IProps, IState>{
-   
+
     constructor(props: IProps) {
         super(props);
         this.state = { searchText: "", parameters: [] };
     }
+
     public handleTextChange = (e: React.FormEvent<HTMLInputElement>) => {
         const actualSearchText = e.currentTarget.value;
         axios.get(`http://localhost:1200/api/parameter/list?SearchString=${actualSearchText}`)
-      .then(res => {
-        this.setState({
-            parameters: res.data,
-            searchText: actualSearchText
-        });
-      })
-
+            .then(res => {
+                this.setState({
+                    parameters: res.data,
+                    searchText: actualSearchText
+                });
+            })
     }
 
     public render() {
@@ -36,9 +36,12 @@ class ParameterSearch extends React.Component<IProps, IState>{
                 <div>{this.state.searchText}</div>
 
                 <input placeholder="Search for..." onChange={this.handleTextChange} />
-                <ParameterRepeter parameters={this.state.parameters} />
+                <ParameterRepeter parameters={this.state.parameters} onSelectionChanged={this.selectionChanged} />
             </div>
         );
+    }
+    private selectionChanged(parameter: IParameterModel) {
+        parameter.name = "";
     }
 }
 
