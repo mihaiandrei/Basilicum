@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Glyphicon } from 'react-bootstrap';
 import IParameterModel from './ParameterModel';
 
 interface IProps {
@@ -19,11 +20,14 @@ class ParameterItem extends React.Component<IProps, IState>{
 
     public render() {
                 return (
-                <div key={this.state.parameter.id} onClick={this.handleClick}>{this.state.parameter.name}</div>
+                <a href="#" className="list-group-item" onClick={this.handleClick} >
+                 <Glyphicon glyph="star" /> 
+                  <div>{this.state.parameter.name}</div>  
+                </a>
         );
     }
 
-    private handleClick = (e: React.FormEvent<HTMLDivElement>) => {
+    private handleClick = (e: React.FormEvent<HTMLAnchorElement>) => {
         this.props.onParameterClick(this.state.parameter);
      }
 }

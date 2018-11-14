@@ -32,11 +32,11 @@ class ParameterRepeter extends React.Component<IProps, IState>{
         });
 
         return (
-            <div>
+            <div className="container">
                 <div>{this.state.selectedParameter}</div>
-                <ul>
+                <div className="list-group">
                     {listItems}
-                </ul>
+                </div>
             </div>
         );
     }
