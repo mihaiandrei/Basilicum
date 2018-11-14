@@ -17,16 +17,15 @@ class ParameterItem extends React.Component<IProps, IState>{
         this.state = { parameter: props.parameter };
     }
 
-    public handleLIClick = (e: React.FormEvent<HTMLLIElement>) => {
-        this.setState({
-        });
-    }
-
     public render() {
                 return (
-                <div key={this.state.parameter.id}>{this.state.parameter.name}</div>
+                <div key={this.state.parameter.id} onClick={this.handleClick}>{this.state.parameter.name}</div>
         );
     }
+
+    private handleClick = (e: React.FormEvent<HTMLDivElement>) => {
+        this.props.onParameterClick(this.state.parameter);
+     }
 }
 
 export default ParameterItem;
