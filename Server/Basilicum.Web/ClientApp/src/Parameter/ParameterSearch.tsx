@@ -4,7 +4,7 @@ import IParameterModel from './ParameterModel';
 import ParameterRepeter from './ParameterRepeter';
 
 interface IProps {
-    parameter: string;
+    onParameterAdded: (parameter: IParameterModel) => void;
 }
 
 interface IState {
@@ -13,10 +13,9 @@ interface IState {
 }
 
 class ParameterSearch extends React.Component<IProps, IState>{
-
     constructor(props: IProps) {
         super(props);
-        this.state = { searchText: "", parameters: [] };
+        this.state = { searchText: "", parameters: []};
     }
 
     public handleTextChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -33,15 +32,13 @@ class ParameterSearch extends React.Component<IProps, IState>{
     public render() {
         return (
             <div>
-                <div>{this.state.searchText}</div>
-
                 <input placeholder="Search for..." onChange={this.handleTextChange} />
                 <ParameterRepeter parameters={this.state.parameters} onSelectionChanged={this.selectionChanged} />
             </div>
         );
     }
     private selectionChanged(parameter: IParameterModel) {
-        parameter.name = "";
+        this.props.onParameterAdded(parameter);
     }
 }
 

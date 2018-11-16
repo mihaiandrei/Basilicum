@@ -21,7 +21,7 @@ class ParameterItem extends React.Component<IProps, IState>{
     public render() {
                 return (
                 <a href="#" className="list-group-item" onClick={this.handleClick} >
-                 <Glyphicon glyph="star" /> 
+                 <Glyphicon glyph="plus align-left" /> 
                   <div>{this.state.parameter.name}</div>  
                 </a>
         );
