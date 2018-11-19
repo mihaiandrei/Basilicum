@@ -18,7 +18,7 @@ namespace Basilicum.Server.Test
 				Name = parameterName
 			});
 
-			var parameters = await Send(new Features.Parameter.List.Query());
+			var parameters = await Send(new Features.Parameter.List.Query() { SearchString = "Test" });
 
 			var parameter = parameters.FirstOrDefault(m => m.Id == parameterId);
 
