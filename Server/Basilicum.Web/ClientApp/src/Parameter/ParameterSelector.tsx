@@ -14,16 +14,16 @@ class ParameterSelector extends React.Component<{}, IState>{
     }
 
     public addParameter = (parameter: IParameterModel) => {
-       this.setState({ parameters:[parameter] });
-        }
+         
+        this.setState({ parameters:this.state.parameters.concat(parameter)});
+    }
 
     public render() {
         return (
             <div>
                 <div>SelectedParameters</div>
-                <ParameterSearch onParameterAdded={this.addParameter} />
                 <SelectedParameters parameters={this.state.parameters} />
-                
+                <ParameterSearch onParameterAdded={this.addParameter} />
             </div>
         );
     }

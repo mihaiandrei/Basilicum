@@ -17,7 +17,7 @@ class SelectedParameters extends React.Component<IProps, IState>{
 
     public render() {
         const listItems = this.props.parameters.map((item: IParameterModel) => {
-            return (<div key={item.id} >{item.name}</div>
+            return (<div key={item.id}>{item.name}</div>
             );
         });
 

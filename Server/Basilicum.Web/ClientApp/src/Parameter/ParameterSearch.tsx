@@ -15,7 +15,7 @@ interface IState {
 class ParameterSearch extends React.Component<IProps, IState>{
     constructor(props: IProps) {
         super(props);
-        this.state = { searchText: "", parameters: []};
+        this.state = { searchText: "", parameters: [] };
     }
 
     public handleTextChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ class ParameterSearch extends React.Component<IProps, IState>{
             </div>
         );
     }
-    private selectionChanged(parameter: IParameterModel) {
+    private selectionChanged = (parameter: IParameterModel) => {
         this.props.onParameterAdded(parameter);
     }
 }
