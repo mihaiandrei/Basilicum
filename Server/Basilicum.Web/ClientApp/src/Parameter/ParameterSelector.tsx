@@ -14,8 +14,9 @@ class ParameterSelector extends React.Component<{}, IState>{
     }
 
     public addParameter = (parameter: IParameterModel) => {
-         
-        this.setState({ parameters:this.state.parameters.concat(parameter)});
+         if(!this.state.parameters.some(e => e.id === parameter.id)){
+            this.setState({ parameters:this.state.parameters.concat(parameter)});
+        }
     }
 
     public render() {
