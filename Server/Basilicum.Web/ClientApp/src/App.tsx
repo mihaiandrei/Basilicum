@@ -1,5 +1,5 @@
 import * as React from 'react';
-import   { VictoryChart, VictoryLine} from "victory";
+import ParameterChart from './Chart/ParameterChart'
 import './App.css';
 
 import logo from './logo.svg';
@@ -18,17 +18,7 @@ class App extends React.Component {
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
         <ParameterSelector />
-        <VictoryChart>
-          <VictoryLine
-            data={[
-              { x: "lizard", y: 1234 },
-              { x: "snake", y: 2048 },
-              { x: "crocodile", y: 2600 },
-              { x: "alligator", y: 9000 }
-            ]}
-          />
-        </VictoryChart>
-
+        <ParameterChart parameterId={3}/>
       </div>
     );
   }
