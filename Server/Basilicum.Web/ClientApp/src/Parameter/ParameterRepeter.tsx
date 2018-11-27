@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ParameterItem from './ParameterItem';
+import AddParameterItem from './AddParameterItem';
 import IParameterModel from './ParameterModel';
 
 interface IProps {
@@ -23,7 +23,7 @@ class ParameterRepeter extends React.Component<IProps, IState>{
 
     public render() {
         const listItems = this.props.parameters.map((item: IParameterModel) => {
-            return (<ParameterItem parameter={item} onParameterClick={this.handleLIClick}
+            return (<AddParameterItem parameter={item} onParameterClick={this.handleLIClick}
                 key={item.id} />
             );
         });

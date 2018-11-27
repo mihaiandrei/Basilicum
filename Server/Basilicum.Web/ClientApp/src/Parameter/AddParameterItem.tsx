@@ -12,7 +12,7 @@ interface IState {
 }
 
 
-class ParameterItem extends React.Component<IProps, IState>{
+class AddParameterItem extends React.Component<IProps, IState>{
     constructor(props: IProps) {
         super(props);
         this.state = { parameter: props.parameter };
@@ -32,4 +32,4 @@ class ParameterItem extends React.Component<IProps, IState>{
      }
 }
 
-export default ParameterItem;
+export default AddParameterItem;

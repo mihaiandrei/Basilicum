@@ -1,8 +1,10 @@
 import * as React from 'react';
 import IParameterModel from './ParameterModel';
+import RemoveParameterItem from './RemoveParameterItem'
 
 interface IProps {
     parameters: IParameterModel[];
+    onRemoveParameter: (parameter: IParameterModel) => void;
 }
 
 interface IState {
@@ -17,7 +19,8 @@ class SelectedParameters extends React.Component<IProps, IState>{
 
     public render() {
         const listItems = this.props.parameters.map((item: IParameterModel) => {
-            return (<div key={item.id}>{item.name}</div>
+            return (<RemoveParameterItem parameter={item} onParameterClick={this.handleRemove}
+                key={item.id} />
             );
         });
 
@@ -28,6 +31,10 @@ class SelectedParameters extends React.Component<IProps, IState>{
                 </div>
             </div>
         );
+    }
+
+    public handleRemove = (parameter: IParameterModel) => {
+        this.props.onRemoveParameter(parameter);
     }
 }
 export default SelectedParameters;

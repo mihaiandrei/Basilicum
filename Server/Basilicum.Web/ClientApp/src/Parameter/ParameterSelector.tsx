@@ -14,16 +14,25 @@ class ParameterSelector extends React.Component<{}, IState>{
     }
 
     public addParameter = (parameter: IParameterModel) => {
-         if(!this.state.parameters.some(e => e.id === parameter.id)){
-            this.setState({ parameters:this.state.parameters.concat(parameter)});
+        if (!this.state.parameters.some(e => e.id === parameter.id)) {
+            this.setState({ parameters: this.state.parameters.concat(parameter) });
         }
     }
+
+    public removeParameter = (parameter: IParameterModel) => {
+        if (this.state.parameters.some(e => e.id === parameter.id)) {
+            const index = this.state.parameters.indexOf(parameter);
+            this.state.parameters.splice(index, 1);
+            this.setState({ parameters: this.state.parameters});
+        }
+    }
+
 
     public render() {
         return (
             <div>
                 <div>SelectedParameters</div>
-                <SelectedParameters parameters={this.state.parameters} />
+                <SelectedParameters parameters={this.state.parameters} onRemoveParameter={this.removeParameter} />
                 <ParameterSearch onParameterAdded={this.addParameter} />
             </div>
         );
