@@ -11,7 +11,6 @@ interface IState {
     parameter: IParameterModel;
 }
 
-
 class AddParameterItem extends React.Component<IProps, IState>{
     constructor(props: IProps) {
         super(props);

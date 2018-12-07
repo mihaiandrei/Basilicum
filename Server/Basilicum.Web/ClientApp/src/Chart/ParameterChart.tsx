@@ -18,20 +18,17 @@ class ParameterChart extends React.Component<IProps, IState>{
         this.state = { chartData: [] };
         this.loadMeasurement(3);
         this.loadMeasurement(1015);
-
     }
 
     public loadMeasurement = (parameterId: number) => {
         axios.get(`http://localhost:1200/api/mesurement/list?ParameterId=${parameterId}&StartDate=1%2F1%2F2018&EndDate=12%2F12%2F2018`)
             .then(res => {
                 const chartItems = res.data.map((item: IMeasurementModel) => ({ x: new Date(item.date), y: item.value } as IDateTimeValueChartItem));
-                this.setState((previousState) => {
-                        previousState.chartData.concat({ id: parameterId, data: chartItems })
-                });
+                this.setState((previousState) => ({
+                    chartData: previousState.chartData.concat({ id: parameterId, data: chartItems })
+                }));
             })
     }
-
-
 
     public render() {
         const lines = this.state.chartData.map((item) => {
@@ -39,7 +36,6 @@ class ParameterChart extends React.Component<IProps, IState>{
                 <VictoryLine data={item.data} key={item.id} />
             );
         });
-
 
         const points = this.state.chartData.map((item) => {
             return (
@@ -51,7 +47,6 @@ class ParameterChart extends React.Component<IProps, IState>{
                 />
             );
         });
-
 
         return (
             <div>
