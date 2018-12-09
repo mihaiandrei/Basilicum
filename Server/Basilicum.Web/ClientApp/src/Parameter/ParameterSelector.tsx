@@ -3,19 +3,25 @@ import IParameterModel from './ParameterModel';
 import ParameterSearch from './ParameterSearch';
 import SelectedParameters from './SelectedParameters';
 
+interface IProps {
+    onSelectedParametersChanged: (parametrers: IParameterModel[]) => void;
+}
+
 interface IState {
     parameters: IParameterModel[];
 }
 
-class ParameterSelector extends React.Component<{}, IState>{
-    constructor() {
-        super({});
+
+class ParameterSelector extends React.Component<IProps, IState>{
+    constructor(props: IProps) {
+        super(props);
         this.state = { parameters: [] };
     }
 
     public addParameter = (parameter: IParameterModel) => {
         if (!this.state.parameters.some(e => e.id === parameter.id)) {
-            this.setState((prevoiusState) => ({ parameters: prevoiusState.parameters.concat(parameter) } ));
+            this.setState((prevoiusState) => ({ parameters: prevoiusState.parameters.concat(parameter) }));
+            this.props.onSelectedParametersChanged([parameter]);
         }
     }
 

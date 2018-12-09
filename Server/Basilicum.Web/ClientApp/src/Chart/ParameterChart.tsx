@@ -1,43 +1,24 @@
-import axios from 'axios';
 import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter } from "victory";
 import * as React from 'react';
-import IMeasurementModel from '../Measurement/MeasurementModel';
-import IDateTimeValueChartItem from './DateTimeValueChartItem'
-import IParameterChartData from './ParameterChartData'
+import IParameterChartData from './ParameterChartData';
 
-interface IState {
-    chartData: IParameterChartData[];
-}
 interface IProps {
-    parameterId: number | null
+    chartData: IParameterChartData[]
 }
 
-class ParameterChart extends React.Component<IProps, IState>{
+class ParameterChart extends React.Component<IProps>{
     constructor(props: IProps) {
         super(props);
-        this.state = { chartData: [] };
-        this.loadMeasurement(3);
-        this.loadMeasurement(1015);
-    }
-
-    public loadMeasurement = (parameterId: number) => {
-        axios.get(`http://localhost:1200/api/mesurement/list?ParameterId=${parameterId}&StartDate=1%2F1%2F2018&EndDate=12%2F12%2F2018`)
-            .then(res => {
-                const chartItems = res.data.map((item: IMeasurementModel) => ({ x: new Date(item.date), y: item.value } as IDateTimeValueChartItem));
-                this.setState((previousState) => ({
-                    chartData: previousState.chartData.concat({ id: parameterId, data: chartItems })
-                }));
-            })
-    }
+    }  
 
     public render() {
-        const lines = this.state.chartData.map((item) => {
+        const lines = this.props.chartData.map((item) => {
             return (
                 <VictoryLine data={item.data} key={item.id} />
             );
         });
 
-        const points = this.state.chartData.map((item) => {
+        const points = this.props.chartData.map((item) => {
             return (
                 <VictoryScatter 
                     style={{ data: { fill: 'green' } }}
