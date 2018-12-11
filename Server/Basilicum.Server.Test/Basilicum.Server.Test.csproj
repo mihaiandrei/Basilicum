@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Basilicum.Server\Basilicum.Server\Basilicum.Server.csproj" />
+    <ProjectReference Include="..\Basilicum.Server\Basilicum.Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>
