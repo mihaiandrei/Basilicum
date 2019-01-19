@@ -8,6 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
@@ -28,11 +29,11 @@
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc()
+            services.AddApplicationInsightsTelemetry(this.Configuration);
+            services.AddMvc()
 					.AddFeatureFolders();
 
 			services.AddAutoMapper(typeof(Startup));
-
             services.AddMediatR(typeof(Startup));
 			services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 			services.AddSwaggerGen(c =>
@@ -43,7 +44,10 @@
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IMapper mapper)
+		public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            IMapper mapper,
+            ILoggerFactory loggerFactory)
 		{
 			if (env.IsDevelopment())
 			{
@@ -58,9 +62,10 @@
                                    .AllowAnyMethod()
                                    .AllowAnyHeader()
                                    .AllowCredentials());
-            app.UseMvc();
-
+            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Information);
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
+
+            app.UseMvc();
         }
-	}
+    }
 }
