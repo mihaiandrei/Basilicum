@@ -66,6 +66,16 @@
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
             app.UseMvc();
+            InitializeMigrations(app);
+        }
+
+        private static void InitializeMigrations(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                DatabaseContext dbContext = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                dbContext.Database.Migrate();
+            }
         }
     }
 }
