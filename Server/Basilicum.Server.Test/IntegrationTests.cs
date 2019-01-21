@@ -29,17 +29,16 @@ namespace Basilicum.Server.Test
 		[TestMethod]
 		public async Task Should_Create_NewMeasurement()
 		{
-			var date = DateTime.UtcNow;
-			var value = date.Minute;
-
 			var parameterId = await Send(new Features.Parameter.Create.Command()
 			{
 				Name = "Test"
 			});
 
-			await Send(new Features.Measurement.Create.Command()
+            var date = DateTime.UtcNow;
+            var value = date.Minute;
+
+            await Send(new Features.Measurement.Create.Command()
 			{
-				Date = date,
 				Value = value,
 				ParameterId = parameterId
 			});
@@ -51,7 +50,7 @@ namespace Basilicum.Server.Test
 				ParameterId = parameterId
 			});
 
-			var measurement = measurements.FirstOrDefault(m => m.Date == date);
+			var measurement = measurements.FirstOrDefault();
 
 			Assert.AreEqual(value, measurement.Value);
 		}

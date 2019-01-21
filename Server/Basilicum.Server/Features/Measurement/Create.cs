@@ -13,7 +13,6 @@
         public class Command : IRequest
         {
             public double Value { get; set; }
-            public DateTime Date { get; set; }
             public int ParameterId { get; set; }
         }
 
@@ -30,7 +29,12 @@
 
             protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var measurement = mapper.Map<Command, Measurement>(request);
+                var measurement = new Measurement()
+                {
+                    Date = DateTime.UtcNow,
+                    ParameterId = request.ParameterId,
+                    Value = request.Value
+                };
 
                 context.Measurement.Add(measurement);
                 await context.SaveChangesAsync(cancellationToken);
