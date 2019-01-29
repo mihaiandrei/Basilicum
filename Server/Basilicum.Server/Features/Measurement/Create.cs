@@ -7,9 +7,18 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using FluentValidation;
+
 
     public class Create
     {
+        public class Validator : AbstractValidator<Command>
+        {
+            public Validator()
+            {
+                RuleFor(customer => customer.ParameterId).NotEmpty();
+            }
+        }
         public class Command : IRequest
         {
             public double Value { get; set; }

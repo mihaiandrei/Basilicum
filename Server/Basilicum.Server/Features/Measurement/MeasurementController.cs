@@ -22,14 +22,9 @@
 		}
 
         [HttpPost]
-        [Route("create/{parameterId}/{value}")]
-        public async Task<IActionResult> CreateFromRoute([FromRoute]int parameterId, [FromRoute]double value)
+        [Route("create/{ParameterId}/{Value}")]
+        public async Task<IActionResult> CreateFromRoute([FromRoute]Create.Command command)
         {
-            var command = new Create.Command()
-            {
-                ParameterId = parameterId,
-                Value = value
-            };
             await mediator.Send(command);
             return Ok();
         }
