@@ -19,12 +19,10 @@
         public class Handler : AsyncRequestHandler<Command>
         {
             private readonly DatabaseContext context;
-            private readonly IMapper mapper;
 
             public Handler(DatabaseContext context, IMapper mapper)
             {
                 this.context = context;
-                this.mapper = mapper;
             }
 
             protected override async Task Handle(Command request, CancellationToken cancellationToken)

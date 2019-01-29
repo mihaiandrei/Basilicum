@@ -21,7 +21,20 @@
 			return Ok();
 		}
 
-		[HttpGet]
+        [HttpPost]
+        [Route("create/{parameterId}/{value}")]
+        public async Task<IActionResult> CreateFromRoute([FromRoute]int parameterId, [FromRoute]double value)
+        {
+            var command = new Create.Command()
+            {
+                ParameterId = parameterId,
+                Value = value
+            };
+            await mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpGet]
 		[Route("list")]
 		public async Task<List<List.Model>> List(List.Query query)
 		{
