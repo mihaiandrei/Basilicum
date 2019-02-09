@@ -1,15 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Basilicum.Server.Features.Parameter
+﻿namespace Basilicum.Server.Features.Parameter
 {
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     [Route("api/parameter")]
     public class ParameterController : ControllerBase
     {
-        private readonly ILogger<ParameterController> logger;
         private readonly IMediator mediator;
         public ParameterController(IMediator mediator)
         {
@@ -29,6 +27,13 @@ namespace Basilicum.Server.Features.Parameter
         {
             var model = await mediator.Send(query);
             return model;
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Create.Command command)
+        {
+            await mediator.Send(command);
+            return Ok();
         }
     }
 }
