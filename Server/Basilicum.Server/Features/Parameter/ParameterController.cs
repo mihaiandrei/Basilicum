@@ -30,7 +30,7 @@
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(Create.Command command)
+        public async Task<IActionResult> Delete(Delete.Command command)
         {
             await mediator.Send(command);
             return Ok();
