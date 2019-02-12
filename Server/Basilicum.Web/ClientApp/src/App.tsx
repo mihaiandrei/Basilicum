@@ -45,12 +45,16 @@ class App extends React.Component<{}, IState> {
   }
 
   private loadMeasurement = (parameterId: number) => {
-    axios.get(`http://localhost:1200/api/mesurement/list?ParameterId=${parameterId}&StartDate=1%2F1%2F2018&EndDate=12%2F12%2F2018`)
-      .then(res => {
-        const chartItems = res.data.map((item: IMeasurementModel) => ({ x: new Date(item.date), y: item.value } as IDateTimeValueChartItem));
-        this.setState((previousState) => ({
-          chartData: previousState.chartData.concat({ id: parameterId, data: chartItems })
-        }));
+    axios.get(`/config`)
+      .then(result => {
+        const apiBaseAddress = result.data[`apiBaseAddress`];
+        axios.get(apiBaseAddress + `/api/mesurement/list?ParameterId=${parameterId}&StartDate=1%2F1%2F2019&EndDate=12%2F12%2F2019`)
+          .then(res => {
+            const chartItems = res.data.map((item: IMeasurementModel) => ({ x: new Date(item.date), y: item.value } as IDateTimeValueChartItem));
+            this.setState((previousState) => ({
+              chartData: previousState.chartData.concat({ id: parameterId, data: chartItems })
+            }));
+          })
       })
   }
 
