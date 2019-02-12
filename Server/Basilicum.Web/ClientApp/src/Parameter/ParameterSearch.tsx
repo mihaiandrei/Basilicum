@@ -31,7 +31,6 @@ class ParameterSearch extends React.Component<IProps, IState>{
                         });
                     })
             });
-
     }
 
     public render() {
