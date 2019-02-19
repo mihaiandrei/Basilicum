@@ -5,7 +5,9 @@
     using Basilicum.Server.Infrastructure;
     using FluentValidation;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -25,7 +27,7 @@
             public int ParameterId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command,int>
+        public class Handler : IRequestHandler<Command, int>
         {
             private readonly DatabaseContext context;
 
@@ -36,12 +38,23 @@
 
             public async Task<int> Handle(Command request, CancellationToken cancellationToken)
             {
-               var measurement = new Measurement()
+                var measurement = new Measurement()
                 {
                     Date = DateTime.UtcNow,
                     ParameterId = request.ParameterId,
                     Value = request.Value
                 };
+
+                var latestMeasurement = await context.Measurement
+                                                    .OrderByDescending(m => m.Date)
+                                                    .FirstOrDefaultAsync(m => m.ParameterId == request.ParameterId);
+
+                if (latestMeasurement != null
+                    && Math.Abs(latestMeasurement.Value - request.Value) < 0.000001
+                    && latestMeasurement.Date.AddHours(1) > DateTime.UtcNow)
+                {
+                    context.Measurement.Remove(latestMeasurement);
+                }
 
                 context.Measurement.Add(measurement);
                 await context.SaveChangesAsync(cancellationToken);

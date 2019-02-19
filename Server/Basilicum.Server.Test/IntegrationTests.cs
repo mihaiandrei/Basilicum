@@ -73,5 +73,42 @@ namespace Basilicum.Server.Test
 
             Assert.IsTrue(await Send(new Features.Parameter.Delete.Command { ParameterId = parameterId }));
         }
+
+        [TestMethod]
+        public async Task Should_Create_NewMeasurementOnlyIfValueChanges()
+        {
+            var parameterId = await Send(new Features.Parameter.Create.Command()
+            {
+                Name = "Test"
+            });
+
+            var date = DateTime.UtcNow;
+            var value = date.Minute;
+
+            var mesurementId1 = await Send(new Features.Measurement.Create.Command()
+            {
+                Value = value,
+                ParameterId = parameterId
+            });
+
+            var mesurementId2 = await Send(new Features.Measurement.Create.Command()
+            {
+                Value = value,
+                ParameterId = parameterId
+            });
+
+            var measurement1 = await Send(new Features.Measurement.GetById.Query()
+            {
+                MeasurementId = mesurementId1
+            });
+
+            var measurement2 = await Send(new Features.Measurement.GetById.Query()
+            {
+                MeasurementId = mesurementId2
+            });
+
+            Assert.IsNull(measurement1);
+            Assert.AreEqual(value, measurement2.Value);
+        }
     }
 }
