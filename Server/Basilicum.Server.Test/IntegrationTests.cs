@@ -25,7 +25,6 @@ namespace Basilicum.Server.Test
             Assert.AreEqual(parameterName, parameter.Name);
         }
 
-
         [TestMethod]
         public async Task Should_Create_NewMeasurement()
         {
@@ -37,20 +36,16 @@ namespace Basilicum.Server.Test
             var date = DateTime.UtcNow;
             var value = date.Minute;
 
-            await Send(new Features.Measurement.Create.Command()
+            var mesurementId = await Send(new Features.Measurement.Create.Command()
             {
                 Value = value,
                 ParameterId = parameterId
             });
 
-            var measurements = await Send(new Features.Measurement.List.Query()
+            var measurement = await Send(new Features.Measurement.GetById.Query()
             {
-                StartDate = date.AddMilliseconds(-100),
-                EndDate = date.AddMilliseconds(100),
-                ParameterId = parameterId
+                MeasurementId = mesurementId
             });
-
-            var measurement = measurements.FirstOrDefault();
 
             Assert.AreEqual(value, measurement.Value);
         }

@@ -1,25 +1,25 @@
 ﻿namespace Basilicum.Server.Features.Measurement
 {
-	using MediatR;
-	using Microsoft.AspNetCore.Mvc;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-	[Route("api/mesurement")]
-	public class MeasurementController : ControllerBase
-	{
-		private readonly IMediator mediator;
-		public MeasurementController(IMediator mediator)
-		{
-			this.mediator = mediator;
-		}
+    [Route("api/measurement")]
+    public class MeasurementController : ControllerBase
+    {
+        private readonly IMediator mediator;
+        public MeasurementController(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> Create([FromBody]Create.Command command)
-		{
-			await mediator.Send(command);
-			return Ok();
-		}
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody]Create.Command command)
+        {
+            var measurementId = await mediator.Send(command);
+            return CreatedAtAction(nameof(GetById), new { measurementId }, measurementId);
+        }
 
         [HttpPost]
         [Route("create/{ParameterId}/{Value}")]
@@ -30,11 +30,19 @@
         }
 
         [HttpGet]
-		[Route("list")]
-		public async Task<List<List.Model>> List(List.Query query)
-		{
-			var model = await mediator.Send(query);
-			return model;
-		}
-	}
+        [Route("list")]
+        public async Task<List<List.Model>> List(List.Query query)
+        {
+            var model = await mediator.Send(query);
+            return model;
+        }
+
+        [HttpGet]
+        [Route("{measurementId}")]
+        public async Task<IActionResult> GetById([FromRoute]GetById.Query query)
+        {
+            var measurement = await mediator.Send(query);
+            return Ok(measurement);
+        }
+    }
 }

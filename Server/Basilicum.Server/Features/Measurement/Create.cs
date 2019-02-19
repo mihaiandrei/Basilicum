@@ -3,12 +3,11 @@
     using AutoMapper;
     using Basilicum.Server.Domain;
     using Basilicum.Server.Infrastructure;
+    using FluentValidation;
     using MediatR;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using FluentValidation;
-
 
     public class Create
     {
@@ -19,13 +18,14 @@
                 RuleFor(customer => customer.ParameterId).NotEmpty();
             }
         }
-        public class Command : IRequest
+
+        public class Command : IRequest<int>
         {
             public double Value { get; set; }
             public int ParameterId { get; set; }
         }
 
-        public class Handler : AsyncRequestHandler<Command>
+        public class Handler : IRequestHandler<Command,int>
         {
             private readonly DatabaseContext context;
 
@@ -34,9 +34,9 @@
                 this.context = context;
             }
 
-            protected override async Task Handle(Command request, CancellationToken cancellationToken)
+            public async Task<int> Handle(Command request, CancellationToken cancellationToken)
             {
-                var measurement = new Measurement()
+               var measurement = new Measurement()
                 {
                     Date = DateTime.UtcNow,
                     ParameterId = request.ParameterId,
@@ -45,6 +45,7 @@
 
                 context.Measurement.Add(measurement);
                 await context.SaveChangesAsync(cancellationToken);
+                return measurement.Id;
             }
         }
     }
