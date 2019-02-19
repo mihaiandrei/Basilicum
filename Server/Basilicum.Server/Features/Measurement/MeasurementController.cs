@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     [Route("api/measurement")]
+    [Route("api/mesurement")]
     public class MeasurementController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -40,6 +41,14 @@
         [HttpGet]
         [Route("{measurementId}")]
         public async Task<IActionResult> GetById([FromRoute]GetById.Query query)
+        {
+            var measurement = await mediator.Send(query);
+            return Ok(measurement);
+        }
+
+        [HttpGet]
+        [Route("{ParameterId}/latest")]
+        public async Task<IActionResult> GetLatestMeasurement([FromRoute]LatestValue.Query query)
         {
             var measurement = await mediator.Send(query);
             return Ok(measurement);
