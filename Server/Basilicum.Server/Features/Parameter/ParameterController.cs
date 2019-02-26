@@ -17,8 +17,8 @@
         [HttpPost]
         public async Task<IActionResult> Create(Create.Command command)
         {
-            await mediator.Send(command);
-            return Ok();
+            var parameterId = await mediator.Send(command);
+            return CreatedAtAction(nameof(GetById), new { parameterId }, parameterId);
         }
 
         [HttpGet]
@@ -27,6 +27,14 @@
         {
             var model = await mediator.Send(query);
             return model;
+        }
+
+        [HttpGet]
+        [Route("{parameterId}")]
+        public async Task<IActionResult> GetById([FromRoute]GetById.Query query)
+        {
+            var parameter = await mediator.Send(query);
+            return Ok(parameter);
         }
 
         [HttpDelete]

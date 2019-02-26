@@ -27,7 +27,7 @@
         public async Task<IActionResult> CreateFromRoute([FromRoute]Create.Command command)
         {
             await mediator.Send(command);
-            return Ok();
+            return CreatedAtAction(nameof(GetById), new { measurementId }, measurementId);
         }
 
         [HttpGet]
