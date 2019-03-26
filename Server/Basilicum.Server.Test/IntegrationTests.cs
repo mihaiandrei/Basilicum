@@ -75,6 +75,34 @@ namespace Basilicum.Server.Test
         }
 
         [TestMethod]
+        public async Task Should_Delete_MeasurementsOlderThen()
+        {
+            var parameterName = "Test";
+            var parameterId = await Send(new Features.Parameter.Create.Command()
+            {
+                Name = parameterName
+            });
+
+            await Send(new Features.Measurement.Create.Command()
+            {
+                Value = DateTime.Now.Minute,
+                ParameterId = parameterId
+            });
+
+            await Send(new Features.Measurement.Delete.Command()
+            {
+                OlderThen = DateTime.Now
+            });
+
+           var measurements =  await Send(new Features.Measurement.List.Query()
+            {
+                ParameterId = parameterId
+            });
+
+            Assert.IsFalse(measurements.Any());
+        }
+
+        [TestMethod]
         public async Task Should_Create_NewMeasurementOnlyIfValueChanges()
         {
             var parameterId = await Send(new Features.Parameter.Create.Command()

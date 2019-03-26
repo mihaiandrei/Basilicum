@@ -53,5 +53,12 @@
             var measurement = await mediator.Send(query);
             return Ok(measurement);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Delete.Command command)
+        {
+            await mediator.Send(command);
+            return Ok();
+        }
     }
 }
