@@ -12,6 +12,7 @@ namespace Basilicum.Server.Features.Measurement
     {
         public class Command : IRequest<bool>
         {
+            public int ParameterId { get; set; }
             public DateTime OlderThen { get; set; }
         }
 
@@ -25,7 +26,8 @@ namespace Basilicum.Server.Features.Measurement
 
             public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
             {
-                var measurements = context.Measurement.Where(m => m.Date < request.OlderThen);
+                var measurements = context.Measurement.Where(m => m.Id == request.ParameterId
+                                                                && m.Date < request.OlderThen);
                 context.Measurement.RemoveRange(measurements);
                 return await context.SaveChangesAsync(cancellationToken) > 0;
             }
