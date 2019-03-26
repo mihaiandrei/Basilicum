@@ -26,7 +26,7 @@
         [Route("create/{ParameterId}/{Value}")]
         public async Task<IActionResult> CreateFromRoute([FromRoute]Create.Command command)
         {
-            await mediator.Send(command);
+            var measurementId = await mediator.Send(command);
             return CreatedAtAction(nameof(GetById), new { measurementId }, measurementId);
         }
 
