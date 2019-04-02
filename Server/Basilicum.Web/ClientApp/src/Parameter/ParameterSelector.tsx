@@ -12,7 +12,6 @@ interface IState {
     parameters: IParameterModel[];
 }
 
-
 class ParameterSelector extends React.Component<IProps, IState>{
     constructor(props: IProps) {
         super(props);
