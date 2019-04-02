@@ -5,6 +5,7 @@ import SelectedParameters from './SelectedParameters';
 
 interface IProps {
     onSelectedParametersChanged: (parametrers: IParameterModel[]) => void;
+    onParameterRemoved: (parametrer: IParameterModel) => void;
 }
 
 interface IState {
@@ -30,6 +31,7 @@ class ParameterSelector extends React.Component<IProps, IState>{
             this.setState((previousState) => {
                 return { parameters: previousState.parameters.filter(param => param.id !== parameter.id) };
             });
+            this.props.onParameterRemoved(parameter);
         }
     }
 

@@ -28,7 +28,8 @@ class App extends React.Component<{}, IState> {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <ParameterSelector onSelectedParametersChanged={this.OnSelectedParameterChanged} />
+        <ParameterSelector onSelectedParametersChanged={this.OnSelectedParameterChanged}
+                            onParameterRemoved={this.OnParameterRemoved} />
         <ParameterChart chartData={this.state.chartData} />
       </div>
     );
@@ -38,6 +39,12 @@ class App extends React.Component<{}, IState> {
     parameters.forEach((parameter) => {
       this.loadMeasurement(parameter.id);
     })
+  }
+  
+  private OnParameterRemoved = (parameter: IParameterModel) => {
+    this.setState((previousState) => ({
+      chartData: previousState.chartData.filter(param => param.id !== parameter.id)
+    }));
   }
 
   private loadMeasurement = async (parameterId: number) => {
