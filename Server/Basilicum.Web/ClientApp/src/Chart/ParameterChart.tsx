@@ -1,4 +1,4 @@
-import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter } from "victory";
+import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTooltip } from "victory";
 import * as React from 'react';
 import IParameterChartData from './ParameterChartData';
 
@@ -25,6 +25,8 @@ class ParameterChart extends React.Component<IProps>{
                     size={2}
                     data={item.data}
                     key={item.id}
+                    labels={(d) => d.y}
+                    labelComponent={<VictoryTooltip/>}
                 />
             );
         });
