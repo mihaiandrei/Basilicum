@@ -18,19 +18,15 @@ class ParameterSearch extends React.Component<IProps, IState>{
         this.state = { searchText: "", parameters: [] };
     }
 
-    public handleTextChange = (e: React.FormEvent<HTMLInputElement>) => {
+    public handleTextChange = async (e: React.FormEvent<HTMLInputElement>) => {
         const actualSearchText = e.currentTarget.value;
-        axios.get(`/config`)
-            .then(result => {
-                const apiBaseAddress = result.data[`apiBaseAddress`];
-                axios.get(apiBaseAddress + `/api/parameter/list?SearchString=${actualSearchText}`)
-                    .then(res => {
-                        this.setState({
-                            parameters: res.data,
-                            searchText: actualSearchText
-                        });
-                    })
-            });
+        const configResult = await axios.get(`/config`)
+        const apiBaseAddress = configResult.data[`apiBaseAddress`];
+        const parameterResult = await axios.get(apiBaseAddress + `/api/parameter/list?SearchString=${actualSearchText}`);
+        this.setState({
+            parameters: parameterResult.data,
+            searchText: actualSearchText
+        });
     }
 
     public render() {
