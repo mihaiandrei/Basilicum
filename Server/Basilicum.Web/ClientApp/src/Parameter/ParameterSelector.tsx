@@ -37,7 +37,6 @@ class ParameterSelector extends React.Component<IProps, IState>{
     public render() {
         return (
             <div>
-                <div>SelectedParameters</div>
                 <SelectedParameters parameters={this.state.parameters} onRemoveParameter={this.removeParameter} />
                 <ParameterSearch onParameterAdded={this.addParameter} />
             </div>
