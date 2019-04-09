@@ -1,8 +1,10 @@
 ﻿namespace Basilicum.Server.Test.Helpers
 {
+    using Basilicum.Server.Infrastructure;
     using FakeItEasy;
     using MediatR;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using System.IO;
     using System.Threading.Tasks;
@@ -28,7 +30,10 @@
 		{
 			using (var scope = scopeFactory.CreateScope())
 			{
-				var mediator = scope.ServiceProvider.GetService<IMediator>();
+                DatabaseContext dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                dbContext.Database.Migrate();
+
+                var mediator = scope.ServiceProvider.GetService<IMediator>();
 				return await mediator.Send(request);
 			}
 		}

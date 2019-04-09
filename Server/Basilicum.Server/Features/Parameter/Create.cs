@@ -1,6 +1,5 @@
 ﻿namespace Basilicum.Server.Features.Parameter
 {
-    using AutoMapper;
     using Basilicum.Server.Domain;
     using Basilicum.Server.Infrastructure;
     using MediatR;
@@ -12,21 +11,24 @@
         public class Command : IRequest<int>
         {
             public string Name { get; set; }
+            public double Accuracy { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, int>
         {
             private readonly DatabaseContext context;
-            private readonly IMapper mapper;
-            public Handler(DatabaseContext context, IMapper mapper)
+            public Handler(DatabaseContext context)
             {
                 this.context = context;
-                this.mapper = mapper;
             }
 
-            public async Task<int> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<int> Handle(Command command, CancellationToken cancellationToken)
             {
-                var parameter = mapper.Map<Command, Parameter>(request);
+                var parameter = new Parameter()
+                {
+                    Name = command.Name,
+                    Accuracy = command.Accuracy
+                };
 
                 context.Parameter.Add(parameter);
                 await context.SaveChangesAsync(cancellationToken);

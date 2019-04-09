@@ -45,12 +45,17 @@
                     Value = request.Value
                 };
 
+                var parameterAccuracy = await context.Parameter
+                                                    .Where(p => p.Id == request.ParameterId)
+                                                    .Select(p => p.Accuracy)
+                                                    .SingleAsync();
+
                 var latestMeasurement = await context.Measurement
                                                     .OrderByDescending(m => m.Date)
                                                     .FirstOrDefaultAsync(m => m.ParameterId == request.ParameterId);
 
                 if (latestMeasurement != null
-                    && Math.Abs(latestMeasurement.Value - request.Value) < 0.000001
+                    && Math.Abs(latestMeasurement.Value - request.Value) < parameterAccuracy
                     && latestMeasurement.Date.AddHours(1) > DateTime.UtcNow)
                 {
                     context.Measurement.Remove(latestMeasurement);

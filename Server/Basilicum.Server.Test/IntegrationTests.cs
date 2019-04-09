@@ -120,7 +120,8 @@ namespace Basilicum.Server.Test
         {
             var parameterId = await Send(new Features.Parameter.Create.Command()
             {
-                Name = "Test"
+                Name = "Test",
+                Accuracy = 0.1
             });
 
             var date = DateTime.UtcNow;
