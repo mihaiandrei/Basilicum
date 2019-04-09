@@ -18,11 +18,23 @@ namespace Basilicum.Server.Test
                 Name = parameterName
             });
 
-            var parameters = await Send(new Features.Parameter.List.Query() { SearchString = "Test" });
-
-            var parameter = parameters.FirstOrDefault(m => m.Id == parameterId);
+            var parameter = await Send(new Features.Parameter.GetById.Query() { ParameterId = parameterId });
 
             Assert.AreEqual(parameterName, parameter.Name);
+        }
+
+        [TestMethod]
+        public async Task Should_ListParameters()
+        {
+            var parameterName = "Test";
+            var parameterId = await Send(new Features.Parameter.Create.Command()
+            {
+                Name = parameterName
+            });
+
+            var parameters = await Send(new Features.Parameter.List.Query() { SearchString = parameterName });
+            var parameter = parameters.First();
+            Assert.IsTrue(parameter.Name.Contains(parameterName));
         }
 
         [TestMethod]
@@ -91,10 +103,11 @@ namespace Basilicum.Server.Test
 
             await Send(new Features.Measurement.Delete.Command()
             {
-                OlderThen = DateTime.Now
+                OlderThen = DateTime.Now,
+                ParameterId = parameterId
             });
 
-           var measurements =  await Send(new Features.Measurement.List.Query()
+            var measurements = await Send(new Features.Measurement.List.Query()
             {
                 ParameterId = parameterId
             });
@@ -137,6 +150,34 @@ namespace Basilicum.Server.Test
 
             Assert.IsNull(measurement1);
             Assert.AreEqual(value, measurement2.Value);
+        }
+
+        [TestMethod]
+        public async Task Should_LatestValue()
+        {
+            var parameterId = await Send(new Features.Parameter.Create.Command()
+            {
+                Name = "Test"
+            });
+
+            await Send(new Features.Measurement.Create.Command()
+            {
+                Value = 1,
+                ParameterId = parameterId
+            });
+
+            await Send(new Features.Measurement.Create.Command()
+            {
+                Value = 2,
+                ParameterId = parameterId
+            });
+
+            var latestMeasurement = await Send(new Features.Measurement.LatestValue.Query()
+            {
+                ParameterId = parameterId
+            });
+
+            Assert.AreEqual(2, latestMeasurement.Value);
         }
     }
 }
