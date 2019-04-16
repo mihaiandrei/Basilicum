@@ -1,4 +1,4 @@
-import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTooltip ,VictoryZoomContainer} from "victory";
+import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTooltip } from "victory";
 import * as React from 'react';
 import IParameterChartData from './ParameterChartData';
 
@@ -33,10 +33,7 @@ class ParameterChart extends React.Component<IProps>{
 
         return (
             <div>
-                <VictoryChart width={600} height={470} scale={{ x: "time" }}
-                containerComponent={
-                    <VictoryZoomContainer/>
-                  }>
+                <VictoryChart width={600} height={470} scale={{ x: "time" }}>
                     <VictoryAxis 
                         tickFormat={this.tickFormatYear}
                         tickCount={2}
