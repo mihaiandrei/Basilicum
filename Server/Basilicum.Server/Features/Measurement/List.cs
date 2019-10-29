@@ -48,13 +48,15 @@
                                     .ToListAsync();
             }
 
-                public class ListProfile : Profile
-                {
-                    public ListProfile()
-                    {
-                        CreateMap<Basilicum.Server.Domain.Measurement, Model>();
-                    }
-                }
+            
+        }
+
+        public class ListProfile : Profile
+        {
+            public ListProfile()
+            {
+                CreateMap<Basilicum.Server.Domain.Measurement, Model>();
+            }
         }
     }
 }

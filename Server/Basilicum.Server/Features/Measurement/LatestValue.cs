@@ -44,13 +44,13 @@
                                                 .FirstOrDefaultAsync();
                 return measurement;
             }
+        }
 
-            public class ListProfile : Profile
+        public class ListProfile : Profile
+        {
+            public ListProfile()
             {
-                public ListProfile()
-                {
-                    CreateMap<Basilicum.Server.Domain.Measurement, Model>();
-                }
+                CreateMap<Basilicum.Server.Domain.Measurement, Model>();
             }
         }
     }
