@@ -42,6 +42,14 @@ namespace Basilicum.Server.Features.Parameter
                                     .ProjectTo<Model>(configurationProvider)
                                     .ToListAsync();
             }
+
+            public class ListProfile : Profile
+            {
+                public ListProfile()
+                {
+                    CreateMap<Basilicum.Server.Domain.Parameter, Model>();
+                }
+            }
         }
     }
 }

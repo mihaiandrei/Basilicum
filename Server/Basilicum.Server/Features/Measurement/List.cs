@@ -47,6 +47,14 @@
                                     .ProjectTo<Model>(configurationProvider)
                                     .ToListAsync();
             }
+
+                public class ListProfile : Profile
+                {
+                    public ListProfile()
+                    {
+                        CreateMap<Basilicum.Server.Domain.Measurement, Model>();
+                    }
+                }
         }
     }
 }

@@ -42,5 +42,13 @@
                 return measurement;
             }
         }
+
+        public class GetByIdProfile : Profile
+        {
+            public GetByIdProfile()
+            {
+                CreateMap<Basilicum.Server.Domain.Measurement, Model>();
+            }
+        }
     }
 }

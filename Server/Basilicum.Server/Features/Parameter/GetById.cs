@@ -41,5 +41,13 @@
                 return parameter;
             }
         }
+
+        public class GetByIdProfile : Profile
+        {
+            public GetByIdProfile()
+            {
+                CreateMap<Basilicum.Server.Domain.Parameter, Model>();
+            }
+        }
     }
 }
