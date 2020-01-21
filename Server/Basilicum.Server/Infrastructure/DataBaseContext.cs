@@ -2,7 +2,6 @@
 {
 	using Basilicum.Server.Domain;
 	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.Configuration;
 
 	public class DatabaseContext : DbContext
 	{

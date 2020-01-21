@@ -10,7 +10,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Swashbuckle.AspNetCore.Swagger;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -30,7 +30,7 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry(this.Configuration);
+           // services.AddApplicationInsightsTelemetry(this.Configuration);
             services.AddMvc(opt =>
                             {
                                 opt.Filters.Add(typeof(ValidatorActionFilter));
@@ -43,7 +43,7 @@
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Basilicum", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basilicum", Version = "v1" });
                 c.CustomSchemaIds(schema => schema.FullName);
             });
         }
@@ -67,7 +67,8 @@
                                    .AllowAnyMethod()
                                    .AllowAnyHeader()
                                    .AllowCredentials());
-            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Information);
+            //TODO Enable AppInsights
+            //loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Information);
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
             app.UseMvc();

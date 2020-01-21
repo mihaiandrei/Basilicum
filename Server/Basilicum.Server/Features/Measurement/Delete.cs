@@ -5,7 +5,6 @@ namespace Basilicum.Server.Features.Measurement
     using MediatR;
     using Microsoft.EntityFrameworkCore;
     using System;
-    using System.Data.SqlClient;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -27,18 +26,8 @@ namespace Basilicum.Server.Features.Measurement
 
             public async Task<bool> Handle(Command request, CancellationToken cancellationToken)
             {
-                var sqlCommand = "DELETE FROM [Measurement] " +
-                                 "WHERE ParameterId = @ParameterId "+ 
-                                 "AND Date < @OlderThen";
-
-                var olderThenParameter = new SqlParameter("@OlderThen", System.Data.SqlDbType.DateTime)
-                {
-                    Value = request.OlderThen
-                };
-                int count = await context.Database.ExecuteSqlCommandAsync(sqlCommand,
-                                        new SqlParameter("@ParameterId", request.ParameterId),
-                                        olderThenParameter);
-                return count > 0;        
+                int count = await context.Database.ExecuteSqlInterpolatedAsync($"DELETE FROM [Measurement] WHERE ParameterId = {request.ParameterId} AND Date < { request.OlderThen.ToString()}");
+                return count > 0;
             }
         }
     }
