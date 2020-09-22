@@ -15,7 +15,7 @@
 
 		static SliceFixture()
 		{
-			var host = A.Fake<IHostingEnvironment>();
+			var host = A.Fake<IWebHostEnvironment>();
 			A.CallTo(() => host.ContentRootPath).Returns(Directory.GetCurrentDirectory());
 
 			var services = new ServiceCollection();
