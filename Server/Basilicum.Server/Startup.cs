@@ -10,13 +10,14 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
 
     public class Startup
     {
         public IConfigurationRoot Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                                 .SetBasePath(env.ContentRootPath)
@@ -30,11 +31,11 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           // services.AddApplicationInsightsTelemetry(this.Configuration);
+            // services.AddApplicationInsightsTelemetry(this.Configuration);
             services.AddMvc(opt =>
-                            {
-                                opt.Filters.Add(typeof(ValidatorActionFilter));
-                            })
+            {
+                opt.Filters.Add(typeof(ValidatorActionFilter));
+            })
                     .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); })
                     .AddFeatureFolders();
 
@@ -46,18 +47,17 @@
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basilicum", Version = "v1" });
                 c.CustomSchemaIds(schema => schema.FullName);
             });
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
-            IHostingEnvironment env,
-            IMapper mapper,
-            ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper mapper, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseRouting();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -65,13 +65,16 @@
             });
             app.UseCors(conf => conf.AllowAnyOrigin()
                                    .AllowAnyMethod()
-                                   .AllowAnyHeader()
-                                   .AllowCredentials());
+                                   .AllowAnyHeader());
             //TODO Enable AppInsights
             //loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Information);
             mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapControllers();
+            });
             InitializeMigrations(app);
         }
 
