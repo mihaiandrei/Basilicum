@@ -14,7 +14,7 @@
     "react-datepicker": "^2.4.0",
     "react-dom": "^16.6.3",
     "react-scripts-ts": "3.1.0",
-    "victory": "^31.0.1"
+    "victory": "^36.6.8"
   },
   "scripts": {
     "start": "react-scripts-ts start",
